@@ -1,6 +1,0 @@
-npm serverless -g install 
-serverless create --template aws-nodejs
-serverless plugin install --name serverless-mocha
-serverless create --template-path ../ServiceTemplate --path user-service
-serverless create function --function createUser --handler src/functions/createUser.createUser --path src/tests/
- 
