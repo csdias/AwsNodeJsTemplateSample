@@ -32,16 +32,16 @@ provider:
 #  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
-  iam:
-    role:
-      statements:
-        - Effect: "Allow"
-          Action:
-            - 'dynamodb:Query'
-            - 'dynamodb:PutItem'
-          Resource:
-            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}
-            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}/index/pk}}
+iam:
+  role:
+    statements:
+      - Effect: "Allow"
+        Action:
+          - 'dynamodb:Query'
+          - 'dynamodb:PutItem'
+        Resource:
+          - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}
+          - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}/index/pk}}
 
 #      Action:
 #        - "s3:ListBucket"
@@ -57,8 +57,8 @@ provider:
 #            - "/*"
 
 # you can define service wide environment variables here
-  environment:
-    DYNAMODB_USER_TABLE: ${self:custom.dynamodb.userTable}
+environment:
+  DYNAMODB_USER_TABLE: ${self:custom.dynamodb.userTable}
 
 # you can add packaging information here
 #package:
