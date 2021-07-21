@@ -26,23 +26,18 @@ provider:
   lambdaHashingVersion: 20201221
   stage: ${opt:stage, 'dev'}
   region: us-east-1
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
-iam:
-  role:
-    statements:
-      - Effect: "Allow"
-        Action:
-          - 'dynamodb:Query'
-          - 'dynamodb:PutItem'
-        Resource:
-          - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}
-          - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}/index/pk}}
-
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - 'dynamodb:Query'
+            - 'dynamodb:PutItem'
+          Resource:
+            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}
+            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}/index/pk}}
+  environment:
+    DYNAMODB_USER_TABLE: ${self:custom.dynamodb.userTable}
 #      Action:
 #        - "s3:ListBucket"
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
@@ -56,9 +51,6 @@ iam:
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
 
-# you can define service wide environment variables here
-environment:
-  DYNAMODB_USER_TABLE: ${self:custom.dynamodb.userTable}
 
 # you can add packaging information here
 #package:
