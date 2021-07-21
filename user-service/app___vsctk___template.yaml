@@ -6,4 +6,4 @@ Resources:
       CodeUri: /Users/csdias/Acme/WOWINC/Training/Serverless/user-service
       Runtime: nodejs12.x
       Environment:
-        Variables: {}
+        Variables: {DYNAMODB_USER_TABLE: 'user-service-user-dev'}

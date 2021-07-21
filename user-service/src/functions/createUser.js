@@ -2,7 +2,7 @@
 const AWS = require('aws-sdk')
 
 module.exports.createUser = async (event, context) => {
-  const body = JSON.parse(event);
+  const body = JSON.parse(event.body);
   const username = body.username;
   const password = body.password;
   const newUserParams = {
