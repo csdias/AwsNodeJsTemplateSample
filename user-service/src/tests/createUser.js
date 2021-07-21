@@ -6,9 +6,9 @@
 const mochaPlugin = require('serverless-mocha');
 const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper('createUser', '../../../src/functions/createUser.js', 'createUser');
-const AWS = require('aws-sdk-mock');
-const AWS_SDK = require('aws-sdk');
-AWS.setSDKInstance('AWS_SDK');
+const AWS = require('aws-sdk-mock')
+const AWS_SDK = require('aws-sdk')
+AWS.setSDKInstance(AWS_SDK)
 
 describe('createUser', () => {
   before((done) => {
@@ -16,7 +16,7 @@ describe('createUser', () => {
   });
 
   it('implement tests here', async () => {
-    const response = await wrapped.run({});
+    const response = await wrapped.run('{"username": "Carlos", "password": "12345"}');
     expect(response).to.not.be.empty;
   });
 });

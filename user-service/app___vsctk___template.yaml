@@ -1,0 +1,9 @@
+Resources:
+  userservice:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/createUser.createUser
+      CodeUri: /Users/csdias/Acme/WOWINC/Training/Serverless/user-service
+      Runtime: nodejs12.x
+      Environment:
+        Variables: {}

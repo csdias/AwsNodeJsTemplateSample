@@ -135,7 +135,6 @@ functions:
 
 plugins:
   - serverless-mocha
-
 custom:
   dynamodb:
     userTable: ${self:service}-user-${self:provider.stage}
