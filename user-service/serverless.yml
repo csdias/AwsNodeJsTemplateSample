@@ -29,15 +29,18 @@ provider:
   iam:
     role:
       statements:
-        - Effect: "Allow"
+        - Effect: Allow
           Action:
-            - 'dynamodb:Query'
-            - 'dynamodb:PutItem'
+            - dynamodb:Query
+            - dynamodb:PutItem
           Resource:
-            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}
-            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamodb.userTable}/index/pk}}
+            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.tableName}
+            - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.tableName}/index/pk}}
+  # this bellow would also works fine
+  #             - Fn::GetAtt: [ UsersTable, Arn ] 
+
   environment:
-    DYNAMODB_USER_TABLE: ${self:custom.dynamodb.userTable}
+    DYNAMODB_USER_TABLE: ${self:custom.tableName}
 #      Action:
 #        - "s3:ListBucket"
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
@@ -128,24 +131,24 @@ functions:
 plugins:
   - serverless-mocha
 custom:
-  dynamodb:
-    userTable: ${self:service}-user-${self:provider.stage}
-
+  tableName: ${self:service}-user-${self:provider.stage}
   serverless-mocha-plugin:
     testTemplate: templates/test-template.ejs
     functionTemplate: templates/function-template.ejs
 
-resourses:
+resources:
   Resources:
-    userTable:
+    UsersTable:
       Type: AWS::DynamoDB::Table
-      DeletionPolicy: Retain
       Properties:
-        TableName: ${self:custom.dynamodb.userTable}
         AttributeDefinitions:
           - AttributeName: pk
-          - AttributeType: S
+            AttributeType: S
         KeySchema:
           - AttributeName: pk
-          - AttributeType: HASH 
-        BillingSystem: PAY-PER-REQUEST
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
+
