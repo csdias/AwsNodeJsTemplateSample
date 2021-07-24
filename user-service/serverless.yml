@@ -41,6 +41,7 @@ provider:
 
   environment:
     DYNAMODB_USER_TABLE: ${self:custom.tableName}
+    JWT_SECRET: ${param:JWT_SECRET}
 #      Action:
 #        - "s3:ListBucket"
 #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
@@ -64,6 +65,16 @@ provider:
 #    - include-me-dir/**
 
 functions:
+  loginUser:
+    handler: src/functions/login.login
+    events:
+      - http:
+          method: post
+          cors: true
+          path: /v1/user/login
+          request:
+            schema:
+              application/json: ${file(src/schema/login-request.json)}
   createUser:
     handler: src/functions/createUser.createUser
     events:

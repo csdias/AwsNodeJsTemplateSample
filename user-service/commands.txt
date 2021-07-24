@@ -5,3 +5,4 @@ serverless create function --function createUser --handler src/functions/createU
 serverless create --template-path ../ServiceTemplate --path user-service
 npm test src/tests
 curl --request POST --url https://jqzsa83a5l.execute-api.us-east-1.amazonaws.com/dev/v1/user --data '{"username": "Carlos", "password": "12345"}' -H 'ContentType: application/json' -i
+serverless create function --function loginUser --handler src/functions/login.login --path src/tests/
